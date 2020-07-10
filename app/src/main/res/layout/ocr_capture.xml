@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/topLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:keepScreenOn="true">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:padding="5dp"
+        android:elevation="1dp">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_action_corner"
+            android:tint="@color/white" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:elevation="1dp"
+            android:rotation="90"
+            android:src="@drawable/ic_action_corner"
+            android:tint="@color/white" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:elevation="1dp"
+            android:rotation="-90"
+            android:src="@drawable/ic_action_corner"
+            android:tint="@color/white" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:elevation="1dp"
+            android:rotation="180"
+            android:src="@drawable/ic_action_corner"
+            android:tint="@color/white" />
+
+
+    </RelativeLayout>
+    <ImageView
+        android:id="@+id/blackLayer"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:elevation="4dp"
+        android:src="#A4000000" />
+
+    <TextView
+        android:id="@+id/startTxt"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:elevation="5dp"
+        android:textColor="#fff"
+        android:textSize="20dp"
+        android:text="Tap to Start"
+        android:padding="20dp"
+        android:gravity="center"
+        android:drawableTint="@color/white"/>
+    <com.yagna.cardreader.view.camera.overlay.GraphicOverlay
+        android:id="@+id/graphicOverlay"
+        android:layout_width="match_parent"
+        android:elevation="3dp"
+        android:layout_height="240dp" />
+    <com.yagna.cardreader.view.camera.CameraSourcePreview
+        android:id="@+id/preview"
+        android:layout_width="match_parent"
+        android:layout_height="240dp">
+    </com.yagna.cardreader.view.camera.CameraSourcePreview>
+
+    <LinearLayout
+        android:layout_below="@+id/preview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include
+            layout="@layout/card_item"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

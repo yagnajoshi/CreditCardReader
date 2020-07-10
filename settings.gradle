@@ -1,0 +1,3 @@
+include ':cardreader'
+include ':app'
+rootProject.name = "CreditCardReader"
