@@ -1,6 +1,7 @@
 # CreditCardReader
 
-https://jitpack.io/#yagnajoshi/CreditCardReader/Tag
+[![](https://jitpack.io/v/yagnajoshi/CreditCardReader.svg)](https://jitpack.io/#yagnajoshi/CreditCardReader)
+
 
 *How to*
 
