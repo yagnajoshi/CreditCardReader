@@ -22,7 +22,6 @@ import android.graphics.RectF;
 
 import com.google.android.gms.vision.text.Text;
 import com.google.android.gms.vision.text.TextBlock;
-import com.yagna.cardreader.view.camera.overlay.GraphicOverlay;
 
 import java.util.List;
 

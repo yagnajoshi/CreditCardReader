@@ -18,16 +18,20 @@ public class TextOperations  {
     public  ArrayList<ArrayList<String[]>> ransom=new ArrayList<>();
 
      ArrayList<String[]> child=new ArrayList();
-    public  OnCardCaptureListner activity;
+    public  OnCardCaptureListner onCardCaptureListner;
     private int digiount;
 
     String cardNoValue ="",nameValue="", valtillValue ="",binValue="", banknameValue="",bankphoneValue="",cardcategoryValue="",cardtypeValue="",countryValue="",bankSiteValue="",validValue="",cardBrandValue="";
 
     public TextOperations(OnCardCaptureListner activity, OcrDetectorProcessor ocrDetectorProcessor) {
-        this.activity=activity;
+        this.onCardCaptureListner =activity;
         this.ocrDetectorProcessor = ocrDetectorProcessor;
     }
 
+
+    public void setOnCardCaptureListner(OnCardCaptureListner onCardCaptureListner) {
+        this.onCardCaptureListner = onCardCaptureListner;
+    }
 
     public void grabText(SparseArray<TextBlock> items) {
         child=new ArrayList();
@@ -45,7 +49,7 @@ public class TextOperations  {
             ransom.add( child);
         if(ransom.size()==5){
             ocrDetectorProcessor.readingState = ocrDetectorProcessor.OFF;
-            activity.onResetCardReading();
+            onCardCaptureListner.onResetCardReading();
             parsingCardData();
         }
     }
@@ -147,7 +151,7 @@ public class TextOperations  {
             mmBox = (valtillValue);
         }
         getCorrectedCardNoValue();
-        activity.onCardRead(cardNoValue, nameValue, mmBox,yyBox);
+        onCardCaptureListner.onCardRead(cardNoValue, nameValue, mmBox,yyBox);
         ransom.clear();
     }
 

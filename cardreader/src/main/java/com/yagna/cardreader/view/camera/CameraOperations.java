@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.vision.text.TextRecognizer;
-import com.yagna.cardreader.view.camera.overlay.GraphicOverlay;
 
 import java.io.IOException;
 
@@ -36,6 +35,7 @@ public class CameraOperations
     public static final String TextBlockObject = "String";
     private OcrDetectorProcessor ocrProcessor;
     private GraphicOverlay<OcrGraphic> mGraphicOverlay;
+    private OnCardCaptureListner onCardCaptureListner;
 
     public CameraOperations(Activity ocrCaptureActivity,  GraphicOverlay<OcrGraphic> mGraphicOverlay,CameraSourcePreview mPreview) {
         activity=ocrCaptureActivity;
@@ -60,7 +60,7 @@ public class CameraOperations
         // graphics for each text block on screen.  The factory is used by the multi-processor to
         // create a separate tracker instance for each text block.
         TextRecognizer textRecognizer = new TextRecognizer.Builder(context).build();
-        ocrProcessor = new OcrDetectorProcessor(mGraphicOverlay,activity);
+        ocrProcessor = new OcrDetectorProcessor(mGraphicOverlay,onCardCaptureListner);
         textRecognizer.setProcessor(ocrProcessor);
         if (!textRecognizer.isOperational()) {
             // Note: The first time that an app using a Vision API is installed on a
@@ -131,6 +131,14 @@ public class CameraOperations
 
     public void readingStart (){
         ocrProcessor.readingState = ocrProcessor.ON;
+    }
+
+    public void setOnCardCaptureListner(OnCardCaptureListner onCardCaptureListner) {
+        this.onCardCaptureListner = onCardCaptureListner;
+
+        if(ocrProcessor !=null) {
+            ocrProcessor.setOnCardCaptureListner(onCardCaptureListner);
+        }
     }
     /*public void readingStop(){
         ocrProcessor.txtOperation.activity.onResetCardReading();

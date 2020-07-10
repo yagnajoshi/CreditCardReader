@@ -15,13 +15,11 @@
  */
 package com.yagna.cardreader.view.camera;
 
-import android.app.Activity;
 import android.util.Log;
 import android.util.SparseArray;
 
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.text.TextBlock;
-import com.yagna.cardreader.view.camera.overlay.GraphicOverlay;
 
 /**
  * A very simple Processor which gets detected TextBlocks and adds them to the overlay
@@ -31,17 +29,25 @@ public class OcrDetectorProcessor implements Detector.Processor<TextBlock> {
 
 
     private static final String TAG = "OcrDetectorProcessor";
-    private final Activity activity;
+    private OnCardCaptureListner onCardCaptureListner;
     private GraphicOverlay<OcrGraphic> mGraphicOverlay;
     public TextOperations txtOperation;
     public static final int ON = 1;
     public static final int OFF = 0;
     public int readingState = OFF;
 
-    public OcrDetectorProcessor(GraphicOverlay<OcrGraphic> ocrGraphicOverlay, Activity ocrCaptureActivity) {
+    public OcrDetectorProcessor(GraphicOverlay<OcrGraphic> ocrGraphicOverlay, OnCardCaptureListner ocrCaptureActivity) {
         mGraphicOverlay = ocrGraphicOverlay;
-         activity=ocrCaptureActivity;
-        txtOperation=new TextOperations((OnCardCaptureListner) activity, this);
+         onCardCaptureListner =ocrCaptureActivity;
+        txtOperation=new TextOperations((OnCardCaptureListner) onCardCaptureListner, this);
+    }
+
+    public void setOnCardCaptureListner(OnCardCaptureListner onCardCaptureListner) {
+        this.onCardCaptureListner = onCardCaptureListner;
+
+        if(txtOperation !=null) {
+            txtOperation.setOnCardCaptureListner(onCardCaptureListner);
+        }
     }
 
     /**

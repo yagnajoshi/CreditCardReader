@@ -37,7 +37,7 @@ import androidx.core.app.ActivityCompat;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.yagna.cardreader.view.camera.CameraSourcePreview;
-import com.yagna.cardreader.view.camera.overlay.GraphicOverlay;
+import com.yagna.cardreader.view.camera.GraphicOverlay;
 import com.yagna.cardreader.view.camera.OcrGraphic;
 import com.yagna.cardreader.view.camera.OnCardCaptureListner;
 import com.yagna.cardreader.view.camera.CameraOperations;
@@ -50,7 +50,7 @@ import static com.yagna.cardreader.view.camera.CameraOperations.UseFlash;
  * rear facing camera. During detection overlay graphics are drawn to indicate the position,
  * size, and contents of each TextBlock.
  */
-public final class OcrCaptureActivity extends AppCompatActivity implements OnCardCaptureListner {
+public final class OcrCaptureActivity extends AppCompatActivity  {
 
 
     private static final String TAG = "OcrCaptureActivity";
@@ -104,9 +104,15 @@ public final class OcrCaptureActivity extends AppCompatActivity implements OnCar
         startTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cameraOperation.readingStart();
-                blackLayer.setVisibility(View.GONE);
-                startTxt.setVisibility(View.GONE);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        cameraOperation.readingStart();
+                        blackLayer.setVisibility(View.GONE);
+                        startTxt.setVisibility(View.GONE);
+                    }
+                });
+
             }
         });
 
@@ -115,6 +121,34 @@ public final class OcrCaptureActivity extends AppCompatActivity implements OnCar
         boolean useFlash = false;
 
         cameraOperation = new CameraOperations(this, mGraphicOverlay, mPreview);
+
+        cameraOperation.setOnCardCaptureListner(new OnCardCaptureListner() {
+            @Override
+            public void onCardRead(final String cardNumber, final String cardhHolderName, final String validTillMonth, final String validTillYear) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        name.setText(cardhHolderName);
+                        cardno.setText(cardNumber);
+                        validtill.setText(validTillMonth+"/"+validTillYear);
+                    }
+                });
+
+            }
+
+            @Override
+            public void onResetCardReading() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        blackLayer.setVisibility(View.VISIBLE);
+                        startTxt.setText("Tap to Retry");
+                        startTxt.setVisibility(View.VISIBLE);
+                    }
+                });
+
+            }
+        });
 
         // Check for the camera permission before accessing the camera.  If the
         // permission is not granted yet, request permission.
@@ -225,34 +259,6 @@ public final class OcrCaptureActivity extends AppCompatActivity implements OnCar
                 .setMessage(R.string.no_camera_permission)
                 .setPositiveButton(R.string.ok, listener)
                 .show();
-    }
-
-
-
-
-    @Override
-    public void onCardRead(final String cardNumber, final String cardhHolderName, final String validTillMonth, final String validTillYear) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                name.setText(cardhHolderName);
-                cardno.setText(cardNumber);
-                validtill.setText(validTillMonth+"/"+validTillYear);
-            }
-        });
-
-    }
-
-    @Override
-    public void onResetCardReading() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                blackLayer.setVisibility(View.VISIBLE);
-                startTxt.setText("Tap to Retry");
-                startTxt.setVisibility(View.VISIBLE);
-            }
-        });
     }
 
 }
