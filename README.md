@@ -3,7 +3,7 @@
 [![](https://jitpack.io/v/yagnajoshi/CreditCardReader.svg)](https://jitpack.io/#yagnajoshi/CreditCardReader)
 
 
-*How to*
+<B>How to</B>
 
 To get a Git project into your build:
 
