@@ -7,7 +7,8 @@
 
 To get a Git project into your build:
 
-<B>Step 1.</B> Add the JitPack repository to your build file
+<B>Step 1.</B> 
+Add the JitPack repository to your build file
 
 Add it in your root build.gradle at the end of repositories:
 
@@ -20,10 +21,13 @@ repositories {
   url 'https://jitpack.io'
   
   }
+  
   }
+  
 }
 
-<B>Step 2. </B> Add the dependency
+<B>Step 2. </B> 
+Add the dependency
 
 dependencies {
 
